@@ -16,7 +16,9 @@ import { SileBarComponent } from './components/sile-bar/sile-bar.component';
     CommonModule
   ],
   exports:[
-    SileBarComponent
+    SileBarComponent,
+    MediaPlayerComponent,
+    HeaderUserComponent
   ]
 })
 export class SharedModule { }
