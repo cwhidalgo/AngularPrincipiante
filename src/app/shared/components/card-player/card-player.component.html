@@ -16,7 +16,7 @@
 
 <!-- Diseño del mode (big)-->
 <div *ngIf="mode==='big'" class="card-player player-big">
-    <img [src]="track.cover" alt="" class="cover">
+    <img appImgBroken [customImg]="'https://th.bing.com/th/id/R.a622bc6f9ad036d090ccde2f37fa2202?rik=FOjraEJ1wSM4zw&riu=http%3a%2f%2fclipground.com%2fimages%2fangular-clipart-10.jpg&ehk=9UM%2fJxV15PPt2HA%2fNf9%2fDm5OPmUhRUhjeje%2fZ4JHBkM%3d&risl=&pid=ImgRaw&r=0'" [src]="track.cover" alt="" class="cover">
     <div class="content-player">
         <div class="title-track">{{track.name}}</div>
         <div class="sub-title-track">{{track.name}}</div>

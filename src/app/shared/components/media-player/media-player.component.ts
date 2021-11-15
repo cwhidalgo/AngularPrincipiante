@@ -9,11 +9,11 @@ import { TrackModel } from '@core/models/traks.models';
 export class MediaPlayerComponent implements OnInit {
 
   mockCover: TrackModel={
-    cover:'https://www.udemy.com/course/angular-principiantes-leifer-mendez/learn/lecture/28818468#overview',
-    album:'cover',
-    name:'salsa',
-    url:'http://localhost/tracks.mp3',
-    _id: 1
+    cover:"https://jenesaispop.com/wp-content/uploads/2009/09/guetta_onelove.jpg",
+    album:'One Love',
+    name:'Getting Over',
+    url:'http://localhost:3000/track.mp3',
+    _id: 1  
   }
   constructor() { }
 
