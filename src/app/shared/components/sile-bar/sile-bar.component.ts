@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { TrackService } from '@modules/tracks/services/track.service';
 
 @Component({
   selector: 'app-sile-bar',
@@ -14,7 +13,7 @@ export class SileBarComponent implements OnInit {
 
   customOptions: Array<any> = []
 
-  constructor(private router:Router, private trackService: TrackService) { }
+  constructor(private router:Router) { }
 
   ngOnInit(): void {
     this.mainMenu.defaultOptions=[
@@ -64,15 +63,15 @@ export class SileBarComponent implements OnInit {
       }
     ]
 
-    this.trackService.dataTracksRandom$
-    .subscribe((response: any ) => {
-      this.customOptions.push(
-        {
-          name:response[0].name,
-          router: []
-        }
-      )
-    })
+    // this.trackService.dataTracksRandom$
+    // .subscribe((response: any ) => {
+    //   this.customOptions.push(
+    //     {
+    //       name:response[0].name,
+    //       router: []
+    //     }
+    //   )
+    // })
   }
 goTo($event:any):void{
   this.router.navigate(['/', 'favorites'],{

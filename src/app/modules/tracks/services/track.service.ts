@@ -1,34 +1,54 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TrackModel } from '@core/models/traks.models';
-import { observable, Observable, of } from 'rxjs';
-import * as dataRaw from '../../../../data/tracks.json'
-import { TracksModule } from '../tracks.module';
+import { Observable, of } from 'rxjs';
+import { catchError, map, mergeMap, tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TrackService {
-  dataTracksTrending$: Observable<TrackModel[]> =of([])
-  dataTracksRandom$: Observable<any> =of([])
-  
-  constructor() {
-    const { data }: any =(dataRaw as any).default;
-    
-    this.dataTracksTrending$ = of(data)
-    this.dataTracksRandom$ = new Observable((observer)=> {
-      const tracksExample :TrackModel = {
-          _id:9,
-          name:'lave',
-          album:'cartel de santa',
-          url:'http://',
-          cover:'https://th.bing.com/th/id/R.35b3dc81d36028bb72d97b4df454fdcb?rik=jEEI695adfmUrA&pid=ImgRaw&r=0'
 
-      }
-      setTimeout(()=> {
-        observer.next([tracksExample])
-      }, 3500)
-      
+   private readonly URL = environment.api
+  constructor(private http:HttpClient) {
+    }
 
-    })
-   }
-}
+    private skipById(listTracks:TrackModel[], id: number): Promise<TrackModel[]> {
+      return new Promise((resolve, reject)=>{
+        const listTmp = listTracks.filter(a => a._id!=id)
+        resolve(listTmp)
+      })
+    }
+    // devolver todas las canciones
+    getAllTracks$(): Observable<any>{
+      return this.http.get(`${this.URL}/tracks`)
+      .pipe(
+        map(({data}: any)=>{
+          return data
+        })
+      )
+    }
+
+        // devolver todas las canciones Radom
+        getAllRadom$(): Observable<any>{
+          return this.http.get(`${this.URL}/tracks`)
+          .pipe(
+            tap(data=>console.log('ok ok ok', data)),
+            mergeMap(({data}: any)=>this.skipById(data,1)),
+            // { //lista invertida
+            //   return data.reverse()
+            // }),
+            //  map((dataRevertida)=> { //fiter comun de array
+            //   return dataRevertida.filter((track:TrackModel)=>track._id !=1)
+            // })
+            tap(data=>console.log('ok ok ok', data)),
+            catchError((err)=>{
+              const {status, statusText} = err
+              console.log('algo paso revisame alert',[status, statusText]);
+              return of([])
+            })
+          )
+        }
+
+  }
